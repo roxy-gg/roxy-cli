@@ -18,10 +18,10 @@ commands, and iterates on the result — all from the shell.
   Streamable HTTP.
 - **Skills** — drop a `SKILL.md` in `.roxy/skills/` (or `.claude/skills/`) to
   teach the agent a reusable workflow.
-- **Prompt caching** — Anthropic cache breakpoints cut cost and time-to-first-
-  token substantially on multi-turn sessions.
-- **Multi-provider** — Anthropic, OpenAI, OpenRouter, Groq, DeepSeek, Google
-  Gemini, and local Ollama.
+- **Bring your own model** — sign in with an existing subscription, point Roxy
+  at any OpenAI-compatible endpoint, or run fully local with Ollama.
+- **Prompt caching** — cache breakpoints cut cost and time-to-first-token
+  substantially on multi-turn sessions.
 - **Subagents** — delegate focused work to an `explore` (read-only) or
   `general` subagent.
 - **Context compaction** — summarizes earlier turns automatically as the
@@ -34,11 +34,50 @@ npm install
 npm run build
 ```
 
-Set a key for whichever provider you use:
+## Getting started
+
+Roxy needs a model to talk to. Pick whichever path fits you:
+
+### Sign in with a subscription
+
+If you already pay for a plan, sign in once and Roxy uses it — no API key to
+manage:
 
 ```bash
-export ANTHROPIC_API_KEY=sk-ant-...
+node bin/roxy.cjs login          # then follow the browser prompt
+node bin/roxy.cjs accounts       # list signed-in accounts
 ```
+
+### Use your own endpoint
+
+Point Roxy at any OpenAI-compatible API — your own gateway, a self-hosted
+model server, or a provider of your choice:
+
+```bash
+export CUSTOM_BASE_URL=https://your-endpoint.example/v1
+export CUSTOM_API_KEY=your-key
+node bin/roxy.cjs --provider custom
+```
+
+### Run fully local
+
+No account, no key, nothing leaves your machine:
+
+```bash
+node bin/roxy.cjs --provider ollama        # defaults to http://localhost:11434
+```
+
+### Other providers
+
+Roxy also reads a key from the environment, a local `.env`, or `~/.roxy/cli.json`
+and picks the matching provider automatically. Supported: `openai`, `gemini`,
+`openrouter`, `groq`, `deepseek`, `anthropic`, `custom`, `ollama`.
+
+```bash
+node bin/roxy.cjs --provider <name>        # force one explicitly
+```
+
+Run `node bin/roxy.cjs --help` for the full list of flags.
 
 ## Usage
 
@@ -49,11 +88,11 @@ node bin/roxy.cjs
 # Single-shot prompt
 node bin/roxy.cjs -p "explain this codebase architecture"
 
-# Pick a model / provider
-node bin/roxy.cjs -m claude-sonnet-4 --provider anthropic
+# Pick a model
+node bin/roxy.cjs -m <model-id>
 
 # Plan mode: explore and propose, never modify
-node bin/roxy.cjs --mode plan
+node bin/roxy.cjs --plan
 
 # Skip approval prompts (see the warning below)
 node bin/roxy.cjs --yes

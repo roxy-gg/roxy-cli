@@ -124,7 +124,7 @@ ${C.bold}OPTIONS:${C.reset}
   -m, --model <name>      Choose AI model (e.g. gemini-3.8-flash-high, claude-3-7-sonnet, gpt-4o)
   --provider <name>       Choose AI provider:
                           OAuth: antigravity (Google/Gemini), claude-subscription, codex-subscription
-                          API: anthropic, openai, gemini, openrouter, groq, deepseek, ollama
+                          API: anthropic, openai, gemini, openrouter, groq, deepseek, ollama, custom
   --oauth                 Force use of local OAuth subscription accounts
   --plan                  Run in Plan mode (read-only planning and investigation, no file changes)
   -y, --yes               Auto-approve mutating actions (file edits and bash commands)
