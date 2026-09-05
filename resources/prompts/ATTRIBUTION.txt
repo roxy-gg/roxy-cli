@@ -1,0 +1,6 @@
+Roxy is a fork of opencode (https://github.com/sst/opencode), MIT licensed,
+Copyright (c) 2025 opencode.
+
+Portions of Roxy's prompts, tool descriptions, and agent loop derive from
+opencode. Those portions remain under opencode's MIT license; the combined
+work is distributed under the terms in LICENSE at the repository root.

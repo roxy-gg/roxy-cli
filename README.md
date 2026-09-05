@@ -131,4 +131,9 @@ npm run build       # bundle to bin/roxy.cjs
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+[MIT](LICENSE) © Roxy.
+
+Roxy is a fork of [opencode](https://github.com/sst/opencode) (also MIT) and
+retains opencode's copyright alongside Roxy's own. See [LICENSE](LICENSE) and
+[`resources/prompts/ATTRIBUTION.txt`](resources/prompts/ATTRIBUTION.txt) for
+details.
