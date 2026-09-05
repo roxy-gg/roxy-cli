@@ -10,6 +10,7 @@ export type CliProvider =
   | 'claude-subscription'
   | 'gemini-subscription'
   | 'codex-subscription'
+  | 'roxy'
   | 'anthropic'
   | 'openai'
   | 'gemini'
@@ -23,6 +24,7 @@ export type CliProvider =
 export interface CliConfig {
   provider?: CliProvider
   model?: string
+  roxyApiKey?: string
   anthropicApiKey?: string
   openAiApiKey?: string
   geminiApiKey?: string

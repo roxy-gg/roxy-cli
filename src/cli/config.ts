@@ -9,6 +9,9 @@ import type { CliConfig, CliProvider } from './types'
 import { listOAuthAccounts } from './oauth'
 
 const CONFIG_DIR = path.join(os.homedir(), '.roxy')
+
+/** Roxy's own OpenAI-compatible inference endpoint (https://roxy.gg/docs). */
+const ROXY_BASE_URL = 'https://roxy.gg/v1'
 const CONFIG_FILE = path.join(CONFIG_DIR, 'cli.json')
 
 /** Parse a simple .env file into key-value pairs without external dependencies. */
@@ -66,6 +69,7 @@ export const DEFAULT_MODELS: Record<CliProvider, string> = {
   'gemini-subscription': 'gemini-3.8-flash-high',
   'claude-subscription': 'claude-3-7-sonnet-20250219',
   'codex-subscription': 'gpt-4o',
+  roxy: 'openai/gpt-5.6-sol',
   anthropic: 'claude-3-7-sonnet-20250219',
   openai: 'gpt-4o',
   gemini: 'gemini-2.5-pro',
@@ -113,6 +117,7 @@ export function resolveConfig(
     return process.env[key] || localEnv[key] || storedVal || ''
   }
 
+  const roxyKey = getVal('ROXY_API_KEY', stored.roxyApiKey)
   const anthropicKey = getVal('ANTHROPIC_API_KEY', stored.anthropicApiKey)
   const openAiKey = getVal('OPENAI_API_KEY', stored.openAiApiKey)
   const geminiKey = getVal('GEMINI_API_KEY', stored.geminiApiKey) || getVal('GOOGLE_API_KEY')
@@ -128,7 +133,8 @@ export function resolveConfig(
   const oauthAccounts = listOAuthAccounts()
 
   if (!overrides.provider && !stored.provider) {
-    if (anthropicKey) provider = 'anthropic'
+    if (roxyKey) provider = 'roxy'
+    else if (anthropicKey) provider = 'anthropic'
     else if (openAiKey) provider = 'openai'
     else if (geminiKey) provider = 'gemini'
     else if (openRouterKey) provider = 'openrouter'
@@ -155,6 +161,10 @@ export function resolveConfig(
     apiKey = 'oauth'
   } else {
     switch (provider) {
+      case 'roxy':
+        apiKey = roxyKey
+        baseUrl = ROXY_BASE_URL
+        break
       case 'anthropic':
         apiKey = anthropicKey
         break

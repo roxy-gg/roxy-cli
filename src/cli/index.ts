@@ -124,6 +124,7 @@ ${C.bold}OPTIONS:${C.reset}
   -m, --model <name>      Choose AI model (e.g. gemini-3.8-flash-high, claude-3-7-sonnet, gpt-4o)
   --provider <name>       Choose AI provider:
                           OAuth: antigravity (Google/Gemini), claude-subscription, codex-subscription
+                          Roxy: roxy (https://roxy.gg \u2014 every frontier model, one key)
                           API: anthropic, openai, gemini, openrouter, groq, deepseek, ollama, custom
   --oauth                 Force use of local OAuth subscription accounts
   --plan                  Run in Plan mode (read-only planning and investigation, no file changes)
@@ -289,14 +290,20 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<void
     console.error(
       `\n${C.red}${SYM.cross} Error: No API key found for provider "${config.provider}".${C.reset}`
     )
-    console.error(`\nPlease set one of the following environment variables:`)
-    console.error(`  - ANTHROPIC_API_KEY for Anthropic Claude`)
-    console.error(`  - OPENAI_API_KEY for OpenAI`)
-    console.error(`  - GEMINI_API_KEY for Google Gemini`)
-    console.error(`  - OPENROUTER_API_KEY for OpenRouter`)
-    console.error(`  - GROQ_API_KEY for Groq`)
-    console.error(`  - DEEPSEEK_API_KEY for DeepSeek`)
-    console.error(`Or use your active OAuth subscriptions: roxy --oauth\n`)
+    console.error(`${C.dim}Get started in any of these ways:${C.reset}`)
+    console.error(``)
+    console.error(`  ${C.bold}1.${C.reset} Roxy inference \u2014 every frontier model behind one key, pay as you go`)
+    console.error(`     ${C.dim}Create a key at https://roxy.gg/dashboard, then:${C.reset}`)
+    console.error(`     export ROXY_API_KEY=rx-...`)
+    console.error(``)
+    console.error(`  ${C.bold}2.${C.reset} A subscription you already pay for`)
+    console.error(`     roxy login`)
+    console.error(``)
+    console.error(`  ${C.bold}3.${C.reset} Run locally, free`)
+    console.error(`     roxy --provider ollama`)
+    console.error(``)
+    console.error(`${C.dim}Other providers: set OPENAI_API_KEY, GEMINI_API_KEY, OPENROUTER_API_KEY,${C.reset}`)
+    console.error(`${C.dim}GROQ_API_KEY, DEEPSEEK_API_KEY, or ANTHROPIC_API_KEY.${C.reset}\n`)
     process.exit(1)
   }
 

@@ -1,6 +1,6 @@
 /**
  * CLI Multi-Provider LLM Streaming & Tool Calling Client.
- * Supports Anthropic, OpenAI, OpenRouter, Groq, DeepSeek, Ollama, and Google Gemini.
+ * Supports Roxy, Anthropic, OpenAI, OpenRouter, Groq, DeepSeek, Ollama, and Google Gemini.
  */
 import type { CliMessage, CliProvider } from './types'
 import { getCliToolSchemas } from './tools'
@@ -515,7 +515,7 @@ export async function streamChatTurn(opts: StreamProviderOptions): Promise<void>
     case 'gemini':
       return streamGemini(opts)
     default:
-      // OpenAI, OpenRouter, Groq, DeepSeek, Ollama, Copilot, Custom
+      // Roxy, OpenAI, OpenRouter, Groq, DeepSeek, Ollama, Copilot, Custom
       return streamOpenAiCompatible(opts)
   }
 }
