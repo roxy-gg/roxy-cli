@@ -1,0 +1,55 @@
+{
+  "name": "roxy-cli",
+  "version": "0.1.0",
+  "description": "Autonomous terminal AI coding agent with LSP diagnostics, MCP support, and Anthropic prompt caching",
+  "license": "MIT",
+  "author": "Jair Escamilla",
+  "type": "commonjs",
+  "main": "bin/roxy.cjs",
+  "bin": {
+    "roxy": "bin/roxy.cjs"
+  },
+  "files": [
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "coding-agent",
+    "llm",
+    "anthropic",
+    "claude",
+    "openai",
+    "mcp",
+    "lsp",
+    "terminal"
+  ],
+  "scripts": {
+    "build": "esbuild src/cli/index.ts --bundle --platform=node --format=cjs --packages=external --define:__ROXY_VERSION__=\"'0.1.0'\" --banner:js=\"#!/usr/bin/env node\" --outfile=bin/roxy.cjs",
+    "start": "node bin/roxy.cjs",
+    "typecheck": "tsc --noEmit",
+    "test": "esbuild test/cli.ts --bundle --platform=node --format=cjs --packages=external --outfile=test/.out/cli.cjs && node test/.out/cli.cjs",
+    "check": "npm run typecheck && npm test",
+    "prepublishOnly": "npm run check && npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "cross-spawn": "^7.0.6",
+    "eventsource": "^4.0.0",
+    "eventsource-parser": "^3.0.4",
+    "picomatch": "^4.0.2",
+    "tinyglobby": "^0.2.10"
+  },
+  "devDependencies": {
+    "@types/cross-spawn": "^6.0.6",
+    "@types/node": "^22.10.1",
+    "@types/picomatch": "^4.0.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.7.2"
+  }
+}
